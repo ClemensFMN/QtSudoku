@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     }
     centralWidget->setLayout(controlsLayout);
     this->setCentralWidget(centralWidget);
+    //connect(parent, &QMainWindow::keyPressEvent, this, &MainWindow::showHelp);
 }
 
 //helper function to get a list of row/col pairs holding all neighbouring cells of a cell located @ row/col
@@ -73,12 +74,17 @@ QString MainWindow::QVec2String(QVector<int> vec) {
 // called after a new value is entered in a cell
 void MainWindow::enterVal(int row, int col) {
     auto newVal = field[row][col]->text().toInt();
-    // we check whether we have entered an allowed value
-    if(!allowedVals[row][col].contains(newVal)) {
-        field[row][col]->setStyleSheet("QLineEdit { background: rgb(255, 0, 0); }");
+    if(newVal != 0) { // 1 - 9 entered
+        // we check whether we have entered an allowed value
+        if(!allowedVals[row][col].contains(newVal)) {
+            field[row][col]->setStyleSheet("QLineEdit { background: rgb(255, 0, 0); }");
+        }
+        else {
+            field[row][col]->setStyleSheet("QLineEdit { background: rgb(0, 100, 0); }");
+        }
     }
-    else {
-        field[row][col]->setStyleSheet("QLineEdit { background: rgb(0, 100, 0); }");
+    else { // 0 entered
+        field[row][col]->setStyleSheet("QLineEdit { background: rgb(255, 255, 255); }"); // -> revert back to white (original) background
     }
     // update the grid
     grid[row][col] = newVal;
@@ -113,7 +119,12 @@ void MainWindow::updateAllAllowedVals() {
 
 
 
-void MainWindow::mySlot()
-{
+void MainWindow::showHelp() {
     qDebug() << "Hello";
+    /* TODO press "help" button to
+        i) briefly light up cells with only one allowed value
+        ii) show cells with no allowed values
+    //if(_allowedvals.size() == 1) {
+    //    field[row][col]->setStyleSheet("QLineEdit { background: rgb(255, 255, 0); }");
+    }*/
 }

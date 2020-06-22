@@ -31,13 +31,17 @@ if(ANDROID)
     main.cpp
     mainwindow.cpp
     mainwindow.h
+    board.h
+    board.cpp
   )
 else()
   add_executable(sudoku
     main.cpp
     mainwindow.cpp
     mainwindow.h
-  )
+    board.h
+    board.cpp
+ )
 endif()
 
 target_link_libraries(sudoku PRIVATE Qt5::Widgets)

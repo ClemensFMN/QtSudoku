@@ -6,6 +6,8 @@
 #include <QGridLayout>
 #include <QDebug>
 #include <QIntValidator>
+#include <QPushButton>
+#include "board.h"
 
 /*
  * Other ideas:
@@ -13,10 +15,6 @@
  * - load / store of sudokus
  * - store snapshots
 */
-
-
-
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,16 +27,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
 
-    /*int grid[9][9] ={{3, 0, 6, 5, 0, 8, 4, 0, 0},
-                      {5, 2, 0, 0, 0, 0, 0, 0, 0},
-                      {0, 8, 7, 0, 0, 0, 0, 3, 1},
-                      {0, 0, 3, 0, 1, 0, 0, 8, 0},
-                      {9, 0, 0, 8, 6, 3, 0, 0, 5},
-                      {0, 5, 0, 0, 9, 0, 6, 0, 0},
-                      {1, 3, 0, 0, 0, 0, 2, 5, 0},
-                      {0, 0, 0, 0, 0, 0, 0, 7, 4},
-                      {0, 0, 5, 2, 0, 6, 3, 0, 0}};*/
-    // this is supposed to be "easy"; i.e. solvable via constraint propagation only...
+    Board gameBoard;
+
     int grid[9][9] = {{0,0,3,0,2,0,6,0,0},
                       {9,0,0,3,0,5,0,0,1},
                       {0,0,1,8,0,6,4,0,0},
@@ -58,10 +48,12 @@ public:
     QSet<QPair<int, int> > getNeighbours(int row, int col);
     QString QVec2String(QVector<int> vec);
 
+    void setColors();
 public slots:
     void updateAllAllowedVals();
     void showHelp();
     void enterVal(int row, int col);
+    void reset();
 private:
     Ui::MainWindow *ui;
 
